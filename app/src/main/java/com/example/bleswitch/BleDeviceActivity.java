@@ -488,11 +488,12 @@ public class BleDeviceActivity extends AppCompatActivity {
                 for(int i = 0; i < 19; i++) {
                     selValues.add(i);
                 }
-                Spinner spinSel = new Spinner(BleDeviceActivity.this);
-                spinSel.setId(R.id.timeSpin);
                 ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>(BleDeviceActivity.this,
                         android.R.layout.simple_spinner_item,selValues);
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                Spinner spinSel = new Spinner(BleDeviceActivity.this);
+                spinSel.setId(R.id.timeSpin);
                 spinSel.setAdapter(spinnerAdapter);
                 try {
                     Field popup = Spinner.class.getDeclaredField("mPopup");
@@ -507,6 +508,26 @@ public class BleDeviceActivity extends AppCompatActivity {
                 catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
                     // silently fail...
                 }
+
+                Spinner spinSel2 = new Spinner(BleDeviceActivity.this);
+                spinSel.setId(R.id.timeSpin2);
+                LinearLayout.LayoutParams slp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                spinSel.setLayoutParams(slp2);
+                spinSel2.setAdapter(spinnerAdapter);
+                try {
+                    Field popup = Spinner.class.getDeclaredField("mPopup");
+                    popup.setAccessible(true);
+
+                    // Get private mPopup member variable and try cast to ListPopupWindow
+                    android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinSel2);
+
+                    // Set popupWindow height to 500px
+                    popupWindow.setHeight(400);
+                }
+                catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
+                    // silently fail...
+                }
+
                 Button okButton = new Button(BleDeviceActivity.this);
                 okButton.setId(R.id.okButton);
                 okButton.setText("OK");
@@ -516,7 +537,11 @@ public class BleDeviceActivity extends AppCompatActivity {
 
                 TextView selectionText = new TextView(BleDeviceActivity.this);
                 selectionText.setId(R.id.selText);
-                selectionText.setText("Selection: ");
+                selectionText.setText("Appliance 1: ");
+
+                TextView selectionText2 = new TextView(BleDeviceActivity.this);
+                selectionText.setId(R.id.selText2);
+                selectionText.setText("Appliance 2: ");
 
                 LinearLayout tLay1 = new LinearLayout(BleDeviceActivity.this);
                 tLay1.setOrientation(LinearLayout.HORIZONTAL);
@@ -530,17 +555,58 @@ public class BleDeviceActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 sFButton.setLayoutParams(lp2);
 
-
-                ListView lTView = new ListView(BleDeviceActivity.this);
-                lTView.setId(R.id.TFlist);
-
-                tLay1.addView(selectionText);
+                //tLay1.addView(selectionText);
                 tLay1.addView(spinSel);
+                //tLay1.addView(selectionText2);
+                tLay1.addView(spinSel2);
                 tLay1.addView(okButton);
                 tLay1.addView(sFButton);
-
                 linearLayout.addView(tLay1);
-                linearLayout.addView(lTView);
+
+                CheckBox sun = new CheckBox(BleDeviceActivity.this);
+                CheckBox mon = new CheckBox(BleDeviceActivity.this);
+                CheckBox tue = new CheckBox(BleDeviceActivity.this);
+                CheckBox wed = new CheckBox(BleDeviceActivity.this);
+                CheckBox thu = new CheckBox(BleDeviceActivity.this);
+                CheckBox fri = new CheckBox(BleDeviceActivity.this);
+                CheckBox sat = new CheckBox(BleDeviceActivity.this);
+
+                sun.setTag("sun");
+                mon.setTag("mon");
+                tue.setTag("tue");
+                wed.setTag("wed");
+                thu.setTag("thu");
+                fri.setTag("fri");
+                sat.setTag("sat");
+                sun.setText("S");
+                mon.setText("M");
+                tue.setText("T");
+                wed.setText("W");
+                thu.setText("T");
+                fri.setText("F");
+                sat.setText("S");
+
+                setOnMyViewClick(sun);
+                setOnMyViewClick(mon);
+                setOnMyViewClick(tue);
+                setOnMyViewClick(wed);
+                setOnMyViewClick(thu);
+                setOnMyViewClick(fri);
+                setOnMyViewClick(sat);
+
+                LinearLayout daysLinear = new LinearLayout(BleDeviceActivity.this);
+                daysLinear.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams daysLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                daysLinear.setLayoutParams(daysLp);
+
+                daysLinear.addView(sun);
+                daysLinear.addView(mon);
+                daysLinear.addView(tue);
+                daysLinear.addView(wed);
+                daysLinear.addView(thu);
+                daysLinear.addView(fri);
+                daysLinear.addView(sat);
+                linearLayout.addView(daysLinear);
 
                 ArrayList<TimeFrameDataModel> dataValues = new ArrayList<>();
 
@@ -560,7 +626,27 @@ public class BleDeviceActivity extends AppCompatActivity {
 
                     }
                 });
+                ArrayList<TimeFrameDataModel> dataValues2 = new ArrayList<>();
+                spinSel2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        int selNumber = Integer.parseInt(spinSel2.getSelectedItem().toString());
+                        Log.i("SELECTION2", "Value: " + selNumber);
+                        dataValues2.clear();
+                        for(int k = 1; k <= selNumber; k++) {
+                            dataValues2.add(new TimeFrameDataModel(k, "0"));
+                        }
+                    }
 
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+                //dataValues.addAll(dataValues2);
+                ListView lTView = new ListView(BleDeviceActivity.this);
+                lTView.setId(R.id.TFlist);
+                linearLayout.addView(lTView);
                 okButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -568,8 +654,8 @@ public class BleDeviceActivity extends AppCompatActivity {
                         lTView.setAdapter(new TimeFrameAdapter(BleDeviceActivity.this, dataValues,"0" ));
                         if(hasChildren(linearLayout)){
                             Log.i("PARENT", "has childs " + linearLayout.getChildCount());
-                            while(linearLayout.getChildCount() > 1) {
-                                linearLayout.removeViewAt(1);
+                            while(linearLayout.getChildCount() > 2) {
+                                linearLayout.removeViewAt(2);
                                 Log.i("PARENT", "now has childs " + linearLayout.getChildCount());
 
                             }
@@ -578,15 +664,32 @@ public class BleDeviceActivity extends AppCompatActivity {
                         linearLayout.addView(lTView);
                     }
                 });
+                StringBuilder cmdMsg = new StringBuilder("S,T,");
 
                 sFButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Log.i("SIZE", String.valueOf(dataValues.size()));
+                        for(int i = 0; i < 7; i++) {
+                            cmdMsg.append(days[i].toString());
+                        }
+                        cmdMsg.append(","+String.valueOf(dataValues.size())+",");
+
                         for(int l = 0; l < dataValues.size(); l++) {
                             Log.i("APP1DATA",dataValues.get(l).getApp1data());
-                            Log.i("APP2DATA",dataValues.get(l).getApp2data());
+                            cmdMsg.append(dataValues.get(l).getApp1data()+",");
                         }
+
+                        for(int l = 0; l < dataValues.size(); l++) {
+                            Log.i("APP2DATA",dataValues.get(l).getApp2data());
+                            if(l == (dataValues.size() - 1)) {
+                                cmdMsg.append(dataValues.get(l).getApp2data());
+                            }
+                            else {
+                                cmdMsg.append(dataValues.get(l).getApp2data() + ",");
+                            }
+                        }
+                        Log.i("TIMEFRAME",cmdMsg.toString());
                     }
                 });
             }

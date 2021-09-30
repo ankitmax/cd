@@ -28,8 +28,8 @@ public class TimeFrameAdapter extends BaseAdapter {
     final Calendar cldr = Calendar.getInstance();
     int hour = cldr.get(Calendar.HOUR_OF_DAY);
     int min = cldr.get(Calendar.MINUTE);
-    private StringBuilder app1data = new StringBuilder();
-    private StringBuilder app2data = new StringBuilder();
+    private StringBuilder app1data = new StringBuilder("0");
+    private StringBuilder app2data = new StringBuilder("0");
 
     public TimeFrameAdapter(Context context, ArrayList<TimeFrameDataModel> data, String value) {
         // TODO Auto-generated constructor stub
