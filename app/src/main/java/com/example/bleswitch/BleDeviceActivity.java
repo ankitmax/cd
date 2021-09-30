@@ -483,18 +483,11 @@ public class BleDeviceActivity extends AppCompatActivity {
                 final Calendar cldr = Calendar.getInstance();
                 int hour = cldr.get(Calendar.HOUR_OF_DAY);
                 int min = cldr.get(Calendar.MINUTE);
-                LinearLayout tLay1 = new LinearLayout(BleDeviceActivity.this);
-                tLay1.setOrientation(LinearLayout.HORIZONTAL);
-                LinearLayout.LayoutParams tlp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                tLay1.setLayoutParams(tlp1);
-                RelativeLayout tRelative = new RelativeLayout(BleDeviceActivity.this);
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                tRelative.setId(Integer.parseInt("tRel"));
+
                 ArrayList<Integer> selValues = new ArrayList<>();
                 for(int i = 0; i < 19; i++) {
                     selValues.add(i);
                 }
-
                 Spinner spinSel = new Spinner(BleDeviceActivity.this);
                 spinSel.setId(R.id.timeSpin);
                 ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>(BleDeviceActivity.this,
@@ -517,48 +510,39 @@ public class BleDeviceActivity extends AppCompatActivity {
                 Button okButton = new Button(BleDeviceActivity.this);
                 okButton.setId(R.id.okButton);
                 okButton.setText("OK");
+                LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                okButton.setLayoutParams(lp1);
+                //okButton.setClickable(false);
+
+                TextView selectionText = new TextView(BleDeviceActivity.this);
+                selectionText.setId(R.id.selText);
+                selectionText.setText("Selection: ");
+
+                LinearLayout tLay1 = new LinearLayout(BleDeviceActivity.this);
+                tLay1.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams tlp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                tLay1.setLayoutParams(tlp1);
+                tLay1.setId(R.id.tLay1);
 
                 Button sFButton = new Button(BleDeviceActivity.this);
                 sFButton.setId(R.id.submitTF);
                 sFButton.setText("Submit");
+                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                sFButton.setLayoutParams(lp2);
 
-                TextView selectionText = new TextView(BleDeviceActivity.this);
-                selectionText.setId(R.id.selText);
-                selectionText.setText("Number of Selection: ");
-
-                RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                lp1.addRule(RelativeLayout.LEFT_OF, R.id.timeSpin);
-                selectionText.setLayoutParams(lp1);
-
-                RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                lp2.addRule(RelativeLayout.LEFT_OF, R.id.okButton);
-                spinSel.setLayoutParams(lp2);
-
-                ArrayList<TimeFrameDataModel> dataValues = new ArrayList<>();
 
                 ListView lTView = new ListView(BleDeviceActivity.this);
                 lTView.setId(R.id.TFlist);
-                RelativeLayout.LayoutParams lp3 = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.MATCH_PARENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                lp3.addRule(RelativeLayout.BELOW, R.id.selText);
-                lTView.setLayoutParams(lp3);
 
-                RelativeLayout.LayoutParams lp4 = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                lp3.addRule(RelativeLayout.BELOW, R.id.TFlist);
-                sFButton.setLayoutParams(lp3);
+                tLay1.addView(selectionText);
+                tLay1.addView(spinSel);
+                tLay1.addView(okButton);
+                tLay1.addView(sFButton);
 
-                tRelative.addView(selectionText);
-                tRelative.addView(spinSel);
-                tRelative.addView(okButton);
-                tRelative.addView(sFButton);
-                linearLayout.addView(tRelative);
+                linearLayout.addView(tLay1);
+                linearLayout.addView(lTView);
+
+                ArrayList<TimeFrameDataModel> dataValues = new ArrayList<>();
 
                 spinSel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -590,15 +574,21 @@ public class BleDeviceActivity extends AppCompatActivity {
 
                             }
                         }
-
                         linearLayout.removeView(lTView);
                         linearLayout.addView(lTView);
-                        //if(dataValues.size() > 0) {
-                            linearLayout.addView(sFButton);
-                        //}
                     }
                 });
 
+                sFButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i("SIZE", String.valueOf(dataValues.size()));
+                        for(int l = 0; l < dataValues.size(); l++) {
+                            Log.i("APP1DATA",dataValues.get(l).getApp1data());
+                            Log.i("APP2DATA",dataValues.get(l).getApp2data());
+                        }
+                    }
+                });
             }
         });
     }

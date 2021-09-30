@@ -28,6 +28,8 @@ public class TimeFrameAdapter extends BaseAdapter {
     final Calendar cldr = Calendar.getInstance();
     int hour = cldr.get(Calendar.HOUR_OF_DAY);
     int min = cldr.get(Calendar.MINUTE);
+    private StringBuilder app1data = new StringBuilder();
+    private StringBuilder app2data = new StringBuilder();
 
     public TimeFrameAdapter(Context context, ArrayList<TimeFrameDataModel> data, String value) {
         // TODO Auto-generated constructor stub
@@ -82,7 +84,11 @@ public class TimeFrameAdapter extends BaseAdapter {
                 new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        vHolder.fromButton1.setText(hourOfDay+":"+minute);
+                        vHolder.fromButton1.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        if (app1data.length() > 0) {
+                            app1data.delete(0, app1data.length());
+                        }
+                        app1data.append(String.format("%02d%02d", hourOfDay, minute));
                     }
                 }, hour, min, true).show();
             }
@@ -95,7 +101,11 @@ public class TimeFrameAdapter extends BaseAdapter {
                 new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        vHolder.fromButton2.setText(hourOfDay+":"+minute);
+                        vHolder.fromButton2.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        if (app2data.length() > 0) {
+                            app2data.delete(0, app2data.length());
+                        }
+                        app2data.append(String.format("%02d%02d", hourOfDay, minute));
                     }
                 }, hour, min, true).show();
             }
@@ -108,7 +118,9 @@ public class TimeFrameAdapter extends BaseAdapter {
                 new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        vHolder.toButton1.setText(hourOfDay+":"+minute);
+                        vHolder.toButton1.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        app1data.append(String.format("%02d%02d", hourOfDay, minute));
+                        mData.setApp1data(app1data.toString());
                     }
                 }, hour, min, true).show();
             }
@@ -121,12 +133,13 @@ public class TimeFrameAdapter extends BaseAdapter {
                 new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        vHolder.toButton2.setText(hourOfDay+":"+minute);
+                        vHolder.toButton2.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        app2data.append(String.format("%02d%02d", hourOfDay, minute));
+                        mData.setApp2data(app2data.toString());
                     }
                 }, hour, min, true).show();
             }
         });
-
         return vi;
     }
 
@@ -137,7 +150,4 @@ public class TimeFrameAdapter extends BaseAdapter {
         public Button toButton1;
         public Button toButton2;
     }
-
-
-
 }

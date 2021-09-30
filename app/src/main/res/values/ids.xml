@@ -5,4 +5,6 @@
     <item name="timeSpin" type="id"/>
     <item name="submitTF" type="id"/>
     <item name="TFlist" type="id"/>
+    <item name="tLay1" type="id"/>
+    <item name="tRel1" type="id"/>
 </resources>
