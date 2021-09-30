@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BLESwitch</string>
+    <string name="ble_not_supported">BLE NOT SUPPORTED</string>
+    <string name="error_bluetooth_not_supported">NO BLUETOOTH</string>
+    <string name="scan_ble_devices">Scan BLE Devices</string>
+    <string name="info">Info</string>
+    <string name="mode">Mode</string>
+    <string name="setting">Setting</string>
+</resources>

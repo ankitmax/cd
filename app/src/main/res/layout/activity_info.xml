@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="BLE Switch Information" />
+
+    <TextView
+        android:id="@+id/interfaceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_below="@+id/infoText"
+        android:text="" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linear1"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/interfaceText">
+
+    <TextView
+        android:id="@+id/app1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text=" " />
+
+        <TextView
+            android:id="@+id/app1State"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" " />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linear2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear1">
+
+        <TextView
+            android:id="@+id/app2Text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" " />
+
+        <TextView
+            android:id="@+id/app2State"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" " />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/modeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_below="@+id/linear2"
+        android:text="Mode Detail" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linear3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modeText">
+
+        <TextView
+            android:id="@+id/modeTypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Type: " />
+
+        <TextView
+            android:id="@+id/modeType"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" " />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/modeValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_below="@+id/linear3"
+        android:text="" />
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="timeSelection" type="id"/>
+    <item name="okButton" type="id"/>
+    <item name="timeSpin" type="id"/>
+    <item name="submitTF" type="id"/>
+    <item name="TFlist" type="id"/>
+</resources>
